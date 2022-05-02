@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SubcampaignController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <div class="container-fluid class text-center">
+        <h3> List of all Subcampaigns</h3>
+
+        <table class="table">
+             <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Subcampaign</th>
+                    <th>Description</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                    <th>Campaign</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subcampaign in subcampaigns %}
+                    <tr>
+                        <td> <a href= "{{ path('subcampaign_show',{'id': subcampaign.id}) }}">{{ subcampaign.id }}</td>
+                        <td> {{ subcampaign.subcampaign }}</td>
+                        <td> {{ subcampaign.description }}</td>
+                        <td> {{ subcampaign.StartDate|date('d/m/Y') }}</td>
+                        <td> {{ subcampaign.EndDate|date('d/m/Y') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

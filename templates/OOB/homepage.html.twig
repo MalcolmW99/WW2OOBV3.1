@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid">
+    Welcome.
+    {% if not app.user %}
+        
+        Please Register or Login
+    {% else %}
+        For best use of this site please select a service from the list below.
+    
+    <h3>Please select which service to use from the table below.</h3>
+    <p>To be added a description of what each represents.</p>
+
+    <table class="container-fluid background-color:aqua">
+        <tr>
+            <th>
+                <p class="bg-success text-white text-center">COUNTRY</p>
+            </th>
+            <th>
+                <p class = "bg-success text-white text-center"> Navy<p>
+            </th>
+            <th >
+                <p class = "bg-success text-white text-center"> Army<p>
+            </th>
+            <th>
+                <p class = "bg-success text-white text-center"> Air Force<p>
+            </th>
+            <th>
+                <p class = "bg-success text-white text-center"> Government<p>
+            </th>
+            <th>
+                <p class = "bg-success text-white text-center"> People<p>
+            </th>
+        </tr>
+        <tr>
+            <td class>
+                <p class="bg-success text-white text-center">United Kingdom and Commonwealth: </p>
+            </td>
+            <td class>
+                <p class = "bg-light text-dark text-center"><a href= "{{ path('svice_change', {'id': 2}) }}"> Royal Navy<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"> <a href= "{{ path('svice_change', {'id': 3}) }}">British Army<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"><a href= "{{ path('svice_change', {'id': 1}) }}"> Royal Air Force<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"><a href= "{{ path('svice_change', {'id': 4}) }}"> British Government<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"><a href= "{{ path('svice_change', {'id': 5}) }}"> British People<p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="bg-success text-white text-center">Germany: </p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"> Kriegsmarine<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"> Oberkommando des Heeres<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"> Luftwaffe<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"> German Government<p>
+            </td>
+            <td>
+                <p class = "bg-light text-dark text-center"> German People<p>
+            </td>
+        </tr>
+    </table>
+    <p> More to be added later including USA, France and Japan
+</div>
+{% endif %}
+{% endblock %}

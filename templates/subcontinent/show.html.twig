@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Subcontinent: {{ subcontinents.subcontinent }}</h3>
+        <h5> Description: {{ subcontinents.description.description }}</h5>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>SubContinent</th>
+                <th>Location Type</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ subcontinents.id }}</b></td>
+                    <td><b>{{ subcontinents.subcontinent }}</b></td>
+                    <td><b>{{ subcontinents.loctype.loctype }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Continent</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ subcontinents.id }}</b></td>
+                    <td><b><a href= "{{ path('continent_show',{'id': subcontinents.continent.id}) }}">{{ subcontinents.continent.continent }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+    <h6><a href="{{ path('subcontinents') }}">Show all subcontinents</a></h6>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="pr-3">Details: </i></h3>
+            <hr>
+        </div>
+        <h4> Theatres in {{ subcontinents.subcontinent }}</h4></br>
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Theatre</th>
+                <th>Loc Type</th>
+            </thead>
+            <tbody> 
+                 {% for theatre in subcontinents.theatres %}
+                    <tr>
+                        <td> {{ theatre.id }} </td>
+                        <td> <a href= "{{ path('theatre_show', {'id': theatre.id}) }}">{{ theatre.theatre}}</td>
+                        <td> {{ theatre.loctype.loctype}} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4> To be Added</h4></br>
+        <ul>
+            <li>Units at {{ subcontinents.subcontinent }}</li>
+            <li>Government of {{ subcontinents.subcontinent }}</il>
+            <li>People of {{ subcontinents.subcontinent }}</il>
+
+
+
+    </div>
+
+{% endblock %}

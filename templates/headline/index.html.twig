@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} WW2OOB Event Headlines {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #00FFFF; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <div class="container-fluid class text-center">
+        <h3> News Headlines ({{ headlines|length }})</h3>
+
+        <table class="table">
+             <thead class="thead-info">
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Event Headline</th>
+                    <th>SubCategory</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for headline in headlines %}
+                    <tr>
+                        <td> <a href= "{{ path('headline_show', {'id': headline.id}) }}">{{ headline.id }} </a></td>
+                        <td> {{ headline.date|date('d/m/Y') }}</td>
+                        <td> {{ headline.headline }}</td>
+                        <td> <a href= "{{ path('subcampaign_show', {'id': headline.subcampaign.id}) }}">{{ headline.subcampaign.subcampaign}} </a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

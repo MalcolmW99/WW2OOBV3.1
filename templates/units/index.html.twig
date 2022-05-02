@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 10000px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>List of Units</h1>
+    <table class=class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>Unit</th>
+                <th>Unit Number</th>
+                <th>Unit Type</th>
+                <th>Force</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unit in units %}
+                    <tr>
+                        <td> {{ unit.id }} </td>
+                        <td> <a href= "{{ path('unit_show', {'id': unit.id}) }}">{{ unit.unit}}</td>
+                        <td> {{ unit.unitno }} </td>
+                        <td> {{ unit.unittype.unittype }} </td>
+                        <td> {{ unit.Forces.Forcename }} </td>
+                        <td> {{ unit.StartDate|date('d/m/Y') }} </td>
+                        <td> {{ unit.EndDate|date('d/m/Y') }} </td>
+                        <td> {{ unit.Description}} </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContinentsController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>List of Continents</h1>
+            <table class="table">
+             <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Continent</th>
+                    <th>Location Type</th>
+                    <th>Subcampaign</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for continent in continents %}
+                    <tr>
+                        <td> {{ continent.id }} </td>
+                        <td> <a href= "{{ path('continent_show', {'id': continent.id}) }}">{{ continent.continent}}</td>
+                        <td> {{ continent.loctype.loctype}} </td>
+                        <td> <a href= "{{ path('subcampaign_show', {'id': continent.Subcampaign.id}) }}">{{ continent.Subcampaign.subcampaign}} </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

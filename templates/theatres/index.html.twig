@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TheatresController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>List of Theatres</h1>
+    <p>Note that all higher location types will also appear in the country list 
+        <table class="table">
+             <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Theatre</th>
+                    <th>Location Type</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for theatre in theatres %}
+                    <tr>
+                        <td> {{ theatre.id }} </td>
+                        <td> <a href= "{{ path('theatre_show', {'id': theatre.id}) }}">{{ theatre.theatre}}</td>
+                        <td> {{ theatre.loctype.loctype}} </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+{% endblock %}

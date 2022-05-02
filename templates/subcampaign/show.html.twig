@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Subcampaign: {{ subcampaigns.subcampaign }}</h3>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Subcampaign</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Campaign</th>
+                <th>Description</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ subcampaigns.id }}</b></td>
+                    <td><b>{{ subcampaigns.subcampaign }}</b></td>
+                    <td><b>{{ subcampaigns.StartDate|date('d/m/Y') }}</b></td>
+                    <td><b>{{ subcampaigns.EndDate|date('d/m/Y') }}</b></td>
+                    <td><b><a href= "{{ path('campaign_show',{'id': subcampaigns.campaign.id}) }}">{{ subcampaigns.campaign.campaign }}</b></td>
+                    <td><b>{{ subcampaigns.description }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <h6><a href="{{ path('subcampaign') }}">Show all subcampaigns</a></h6>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3><i class="pr-3">Details: </i></h3>
+                <hr>
+            </div>
+        </div>
+
+        {% if not subcampaigns.Battle %}
+            <h4>Units in " {{ subcampaigns.subcampaign }} " subcampaign on {{ app.user.selecteddate|date('d/m/Y') }}</h4></br>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Unit</th>
+                        <th>Unit Number</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for unitstatus in subcampaigns.unitstatuses %}
+                        {% if unitstatus.startdate <= app.user.SelectedDate and unitstatus.enddate >= app.user.SelectedDate %}
+                            <tr>
+                                <td> {{ unitstatus.unit.id }} </td>
+                                <td> <a href= "{{ path('unit_show', {'id': unitstatus.unit.id}) }}">{{ unitstatus.unit.unit}}</td>
+                                <td> {{ unitstatus.unit.unitno }} </td>
+                                <td> {{ unitstatus.startdate|date('d/m/Y') }} </td>
+                                <td> {{ unitstatus.enddate|date('d/m/Y') }} </td>
+                            </tr>
+                        {% endif %}    
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h4>Units in " {{ subcampaigns.subcampaign }} " subcampaign on {{ app.user.selecteddate|date('d/m/Y') }}</h4></br>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Unit</th>
+                        <th>Unit Number</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Sequence No.</th>
+                        <th>Country</th>
+                        <th>Force</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for unitstatus in subcampaigns.SC1unitstatuses %}
+                        {% if unitstatus.startdate <= app.user.SelectedDate and unitstatus.enddate >= app.user.SelectedDate %}
+                            <tr>
+                                <td> {{ unitstatus.unit.id }} </td>
+                                <td> <a href= "{{ path('unit_show', {'id': unitstatus.unit.id}) }}">{{ unitstatus.unit.unit}}</td>
+                                <td> {{ unitstatus.unit.unitno }} </td>
+                                <td> {{ unitstatus.startdate|date('d/m/Y') }} </td>
+                                <td> {{ unitstatus.enddate|date('d/m/Y') }} </td>
+                                <td> {{ unitstatus.seqno }} </td>
+                                <td> {{ unitstatus.unit.country.country }} </td>
+                                <td> {{ unitstatus.unit.forces.forcetype.forceType }} </td>
+                            </tr>
+                        {% endif %}    
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    </div>
+{% endblock %}

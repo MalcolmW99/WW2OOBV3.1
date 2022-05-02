@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Location: {{ locations.location }}</h3>
+        {%if (locations.description.description)%}
+            <h5> Description: {{ locations.description.description }}</h5>
+            <h5> Location Type: {{ locations.description.loctype.loctype }}</h5>
+        {% else %}
+            <h5> Description: Not yet entered</h5>
+            <h5> Location Type: {{ locations.description.loctype.loctype }}</h5>
+        {% endif %}
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Subdivision</th>
+                <th>Division</th>
+                <th>Country</th>
+                <th>Theatre</th>
+                <th>SubContinent</th>
+                <th>continent</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ locations.id }}</b></td>
+                    <td><b><a href= "{{ path('subdivision_show', {'id': locations.subdivisions.id}) }}">{{ locations.subdivisions.subdivision }}</b></td>
+                    <td><b><a href= "{{ path('division_show', {'id': locations.subdivisions.division.id}) }}">{{ locations.subdivisions.division.division }}</b></td>
+                    <td><b><a href= "{{ path('country_show',{'id': locations.subdivisions.division.country.id}) }}">{{ locations.subdivisions.division.country.country }}</b></td>
+                    <td><b><a href= "{{ path('theatre_show',{'id': locations.subdivisions.division.country.theatre.id}) }}">{{ locations.subdivisions.division.country.theatre.theatre }}</b></td></b></td>
+                    <td><b><a href= "{{ path('subcontinent_show',{'id': locations.subdivisions.division.country.theatre.subcontinent.id}) }}">{{ locations.subdivisions.division.country.theatre.subcontinent.subcontinent }}</b></td></b></td>
+                    <td><b><a href= "{{ path('continent_show',{'id': locations.subdivisions.division.country.theatre.subcontinent.continent.id}) }}">{{ locations.subdivisions.division.country.theatre.subcontinent.continent.continent }}</b></td></b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Location Type A</th>
+                <th>Location Type B</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ locations.id }}</b></td>
+                    <td><b>{{ locations.location }}</b></td>
+                    <td><b>{{ locations.loctype.loctype }}</b></td>
+                    <td><b>{{ locations.description.loctype.loctype }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <h6><a href="{{ path('location') }}">Show all locations</a></h6>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="pr-3">{{ unitlocations|length }} Units at {{ locations.location }}</i></h3>
+            <hr>
+            {% if unitlocations|length == 0 %}
+                No Units Found
+            {% else %}
+                <table class="table">
+                    <thead>
+                        <th>Unit</th>
+                        <th>Unit Level</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Comment</th>
+                        <th>Higher Unit</th>
+                        <th>Subcampaign 1</th>
+                        <th>Subcampaign 2</th>
+                    </thead>
+                    <tbody>
+                    {% for unitlocation in unitlocations %}
+                        <tr>
+                        {% if unitlocation.SeqNo <1000 %}
+                            <td> <a href= "{{ path('unit_show',{'id': unitlocation.unit.id}) }}"> {{unitlocation.unit.unit }} </td>
+                            <td> {{unitlocation.unit.unittype.level }} </td>
+                            <td> {{ unitlocation.status.status }} </td>
+                            <td> {{ unitlocation.StartDate|date('d/m/Y') }}</td>
+                            <td> {{ unitlocation.EndDate|date('d/m/Y') }}</td>
+                            <td> {{ unitlocation.comment }} </td>
+                            <td> <a href= "{{ path('unit_show',{'id': unitlocation.higherUnit.id}) }}"> {{unitlocation.HigherUnit.unit }} </td>
+                            <td> <a href= "{{ path('subcampaign_show', {'id': unitlocation.Subcampaign.id}) }}">{{ unitlocation.SubCampaign.subcampaign }} </td>
+                            {% if not unitlocation.SubCampaign2 %}
+                                <td>  </td>
+                            {% else %}
+                                <td><a href= "{{ path('subcampaign_show', {'id': unitlocation.Subcampaign2.id}) }}"> {{ unitlocation.SubCampaign2.subcampaign }} </a></td>
+                            {% endif %}
+                        {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+                </table>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

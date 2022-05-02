@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello COController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>List of Commanding Officers ({{ cos.getTotalItemCount }} total)</h1>
+            <table class="table">
+             <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Initials</th>
+                    <th>Full Name</th>
+                    <th>Date of Birth</th>
+                    <th>Date of Death</th>
+                    <th>Country</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for co in cos %}
+                    <tr>
+                        <td> {{ co.id }} </td>
+                        <td> <a href= "{{ path('co_show', {'id': co.id}) }}">{{ co.name}}</a></td>
+                        <td> {{ co.initials}} </td>
+                        <td> {{ co.FullName}} </td>
+                        <td> {{ co.DoB ? co.DoB|date('d/m/Y') : '   ' }}
+                        <td> {{ co.DoD ? co.DoD|date('d/m/Y') : '   ' }}
+                        <td> <a href= "{{ path('country_show', {'id': co.country.id}) }}">{{ co.country.country}} </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(cos) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

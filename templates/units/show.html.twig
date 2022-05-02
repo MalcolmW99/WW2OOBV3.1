@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h4> Detail Of: {{ units.unit }}</h4>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Unit</th>
+                <th>Number</th>
+                <th>Force</th>
+                <th>Country</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </thead>
+            <tbody bgcolor='lightblue'>
+                <tr>
+                    <td><b>{{ units.id }}</b></td>
+                    <td><b>{{ units.unittype.unittype }} </b></td>
+                    <td><b>{{ units.unit }}</b></td>
+                    <td><b>{{ units.unitno }}</b></td>
+                    <td><b>{{ units.forces.forcename }} </b></td>
+                    <td><b>{{ units.country.country }} </b></td>
+                    <td><b>{{ units.StartDate|date('d/m/Y') }}</b></td>
+                    <td><b>{{ units.EndDate|date('d/m/Y') }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <h5> Description: {{ units.description }}
+            {%if not (units.description)%}
+                Not yet entered
+            {% endif %}
+        </h5>
+        <br><br><h6><a href="{{ path('units') }}">Show all Units</a></h6><br><br>
+
+        <div>
+
+        </div>
+
+        <h3> Timeline </h3>
+        <h5 STYLE = 'background-color: lightyellow'>Status on Selected Date shown with this background</h5>
+        <table class="table">
+            <thead>
+                <th>Seq No</th>
+                <th>Status</th>
+                <th>Unit Changed</th>
+                <th>Comment</th>
+                <th>AT</th>
+                <th>AT2</th>
+                <th>CO</th>
+                <th>Higher</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Subcampaign 1</th>
+                <th>Subcampaign 2</th>
+            </thead>
+            <tbody bgcolor='lightblue'>
+                {% for unitstatus in unitstatuses %}
+                    {% if unitstatus.Seqno <= 1000 %}
+                        {% if unitstatus.StartDate <= app.user.SelectedDate and unitstatus.EndDate >= app.user.SelectedDate %}
+                            <tr bgcolor='LightYellow'>
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                        {% if unitstatus.Seqno == 1000 %}
+                            <tr bgcolor='gold'>
+                        {% endif %}
+                        <td> {{ unitstatus.Seqno }} </td>
+                        <td> {{ unitstatus.status.status }} </td>
+                        {% if not unitstatus.UnitChanged %}
+                            <td>  </td>
+                        {% else %}
+                            <td> <a href= "{{ path('unit_show', {'id': unitstatus.UnitChanged.id}) }}">{{ unitstatus.UnitChanged.unit }}</td>
+                        {% endif %}
+                        <td> {{ unitstatus.Comment }} </td>
+                        <td> <a href= "{{ path('location_show', {'id': unitstatus.location.id}) }}">{{ unitstatus.location.location }} </td>
+                            <td> {{ unitstatus.location.subdivisions.subdivision }} </td>
+                            <td> <a href= "{{ path('co_show', {'id': unitstatus.CO.id}) }}">{{ unitstatus.CO.fullname }} </td>
+                            <td> <a href= "{{ path('unit_show', {'id': unitstatus.HigherUnit.id}) }}">{{ unitstatus.HigherUnit.unit }} </td>
+                            <td> <a href= "{{ path('app_dateupdate', {('id'): unitstatus.id, ('entity'): 'unitstatus', ('date'): 'Start'}) }}"> {{ unitstatus.StartDate|date('d/m/Y') }}</td>
+                            <td> <a href= "{{ path('app_dateupdate', {('id'): unitstatus.id, ('entity'): 'unitstatus', ('date'): 'End'}) }}">{{ unitstatus.EndDate|date('d/m/Y') }}</td>
+                            <td> <a href= "{{ path('subcampaign_show', {'id': unitstatus.Subcampaign.id}) }}">{{ unitstatus.SubCampaign.subcampaign }} </td>
+                            {% if not unitstatus.SubCampaign2 %}
+                                <td>  </td>
+                            {% else %}
+                                <td> <a href= "{{ path('subcampaign_show', {'id': unitstatus.Subcampaign2.id}) }}">{{ unitstatus.SubCampaign2.subcampaign }} </td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+ 
+        <h3> {{ higherunits|length }} Subordinate Units of {{ units.unit }} on {{ app.user.SelectedDate|date('d/m/Y') }} </h3>
+        {% if higherunits|length == 0 %}
+            No Units Found
+        {% else %}
+            <table class="table">
+                <thead>
+                    <th>Unit</th>
+                    <th>Unit Level</th>
+                    <th>Unit No.</th>
+                    <th>AT</th>
+                    <th>AT2</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Comment</th>
+                    <th>Subcampaign 1</th>
+                    <th>Subcampaign 2</th>
+                </thead>
+                <tbody bgcolor='lightblue'>
+                    {% for higherunit in higherunits %}
+                        <tr>
+                            <td> <a href= "{{ path('unit_show',{'id': higherunit.unit.id}) }}"> {{higherunit.unit.unit }} </td>
+                            <td> {{higherunit.unit.unittype.level }} </td>
+                            <td> {{higherunit.unit.unitno }} </td>
+                            <td> {{ higherunit.location.location }} </td>
+                            <td> {{ higherunit.location.subdivisions.subdivision }} </td>
+                            <td> {{ higherunit.status.status }} </td>
+                            <td> {{ higherunit.StartDate|date('d/m/Y') }}</td>
+                            <td> {{ higherunit.EndDate|date('d/m/Y') }}</td>
+                            <td> {{ higherunit.comment }} </td>
+                            <td> <a href= "{{ path('subcampaign_show', {'id': higherunit.Subcampaign.id}) }}">{{ higherunit.SubCampaign.subcampaign }} </td>
+                            {% if not higherunit.SubCampaign2 %}
+                                <td>  </td>
+                            {% else %}
+                                <td><a href= "{{ path('subcampaign_show', {'id': higherunit.Subcampaign2.id}) }}"> {{ higherunit.SubCampaign2.subcampaign }} </a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <h3> Equipment of {{ units.unit }} ( {{ unitequps|length }} Entries )</h3>
+        
+        {% if unitequps|length == 0 %}
+            No Equipment Found<br><br>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <th>Equipment</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                                    </thead>
+                <tbody>
+                    {% for unitequp in unitequps %}
+                        <tr>
+                            <td> {{ unitequp.equipment.name }} </td>
+                            <td> <a href= "{{ path('app_dateupdate', {('id'): unitequp.id, ('entity'): 'unitequp', ('date'): 'Start'}) }}">{{ unitequp.StartDate|date('d/m/Y') }}</td>
+                            <td> <a href= "{{ path('app_dateupdate', {('id'): unitequp.id, ('entity'): 'unitequp', ('date'): 'End'}) }}">{{ unitequp.EndDate|date('d/m/Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% endif %}
+
+        <div>
+
+        <h4> To be Added</h4></br>
+        <ul>
+            <li>Events on Selected Date TBA</li>
+            <li>Headlines on Selected Date TBA</li>
+            <li>More to be added</li>
+    </div>
+
+{% endblock %}

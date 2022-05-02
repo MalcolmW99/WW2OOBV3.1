@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Continent: {{ continents.continent }}</h3>
+        <h5> Description: {{ continents.description.description }}</h5>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Continent</th>
+                <th>Location Type</th>
+                <th>Subcampaign</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ continents.id }}</b></td>
+                    <td><b>{{ continents.continent }}</b></td>
+                    <td><b>{{ continents.loctype.loctype }}</b></td>
+                    <td><b><a href= "{{ path('subcampaign_show', {'id': continents.subcampaign.id}) }}">{{ continents.subcampaign.subcampaign }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+    <h6><a href="{{ path('continents') }}">Show all continents</a></h6>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="pr-3">Details: </i></h3>
+            <hr>
+        </div>
+        <h4> Subcontinents in {{ continents.continent }}</h4></br>
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Subcontinent</th>
+                <th>Loc Type</th>
+            </thead>
+            <tbody>
+                {% for subcontinent in continents.subcontinents %}
+                    <tr>
+                        <td> {{ subcontinent.id }} </td>
+                        <td> <a href= "{{ path('subcontinent_show', {'id': subcontinent.id}) }}">{{ subcontinent.subcontinent}}</a></td>
+                        <td> {{ subcontinent.loctype.loctype}} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4> To be Added</h4></br>
+        <ul>
+            <li>Units on {{ continents.continent }}</li>
+            <li>Government of {{ continents.continent }}</il>
+            <li>People of {{ continents.continent }}</il>
+
+
+
+    </div>
+
+{% endblock %}

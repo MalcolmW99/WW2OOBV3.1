@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Campaign: {{ campaigns.campaign }}</h3>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Campaign</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Front</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ campaigns.id }}</b></td>
+                    <td><b>{{ campaigns.campaign }}</b></td>
+                    <td><b>{{ campaigns.StartDate|date('d/m/Y') }}</b></td>
+                    <td><b>{{ campaigns.EndDate|date('d/m/Y') }}</b></td>
+                    <td><b>{{ campaigns.description }}</b></td>
+                    <td><b><a href= "{{ path('front_show', {'id': campaigns.front.id}) }}">{{ campaigns.front.front }}</a></b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <h6><a href="{{ path('campaign') }}">Show all Campaigns</a></h6>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3><i class="pr-3">Details: </i></h3>
+                <hr>
+                <h4> Subcampaigns in "{{ campaigns.campaign }}" Campaign</h4></br>
+                    <table class="table">
+                        <thead>
+                            <th>ID </th>
+                            <th>Subcampaign </th>
+                            <th>Start Date </th>
+                            <th>End Date </th>
+                            <th>Description </th>
+                            <th>Select<th>
+                        </thead>
+                        <tbody>
+                            {% for subcampaign in campaigns.subcampaigns %}
+                                <tr>
+                                    <td> {{ subcampaign.id }} </td>
+                                    <td> <a href= "{{ path('subcampaign_show', {'id': subcampaign.id}) }}">{{ subcampaign.subcampaign}} </a></td>
+                                    <td><b>{{ subcampaign.StartDate|date('d/m/Y') }}</b></td>
+                                    <td><b>{{ subcampaign.EndDate|date('d/m/Y') }}</b></td>
+                                    <td> {{ subcampaign.description}} </td>
+                                    {% if subcampaign.topunit%}
+                                        <td> <a href= "{{ path('subcampaign_change', {'id': subcampaign.id}) }}">{{ subcampaign.topunit.unit }}</td>
+                                    {% else %}
+                                        <td>    <td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <h4> To be added</h4></br>
+        <ul>
+            <li>Units in this Campaign on Selected Date</li>
+        </ul>
+            
+    </div>
+{% endblock %}

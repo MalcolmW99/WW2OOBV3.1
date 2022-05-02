@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Theatre: {{ theatres.theatre }}</h3>
+        <h5> Description: {{ theatres.description.description }}</h5>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Theatre</th>
+                <th>Location Type</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ theatres.id }}</b></td>
+                    <td><b>{{ theatres.theatre }}</b></td>
+                    <td><b>{{ theatres.loctype.loctype }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>SubContinent</th>
+                <th>Continent</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ theatres.id }}</b></td>
+                    <td><b><a href= "{{ path('subcontinent_show',{'id': theatres.subcontinent.id}) }}">{{ theatres.subcontinent.subcontinent }}</b></td>
+                    <td><b><a href= "{{ path('continent_show',{'id': theatres.subcontinent.continent.id}) }}">{{ theatres.subcontinent.continent.continent }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+    <h6><a href="{{ path('theatres') }}">Show all theatres</a></h6>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="pr-3">Details: </i></h3>
+            <hr>
+        </div>
+        <h4> Countries in {{ theatres.theatre }}</h4></br>
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Country</th>
+                <th>Loc Type</th>
+            </thead>
+            <tbody>
+                {% for country in theatres.countries %}
+                    <tr>
+                        <td> {{ country.id }} </td>
+                        <td> <a href= "{{ path('country_show', {'id': country.id}) }}">{{ country.country}}</td>
+                        <td> {{ country.loctype.loctype}} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4> To be Added</h4></br>
+        <ul>
+            <li>Units at {{ theatres.theatre }}</li>
+            <li>Government of {{ theatres.theatre }}</il>
+            <li>People of {{ theatres.theatre }}</il>
+
+
+
+    </div>
+
+{% endblock %}

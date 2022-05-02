@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Division: {{ divisions.division }}</h3>
+        <h5> Description: {{ divisions.description.description }}</h5>
+ 
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Division</th>
+                <th>Loc Type</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ divisions.id }}</b></td>
+                    <td><b>{{ divisions.division }}</b></td>
+                    <td><b>{{ divisions.loctype.loctype }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Country</th>
+                <th>Theatre</th>
+                <th>SubContinent</th>
+                <th>continent</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ divisions.id }}</b></td>
+                     <td><b><a href= "{{ path('country_show',{'id': divisions.country.id}) }}">{{ divisions.country.country }}</b></td>
+                    <td><b><a href= "{{ path('theatre_show',{'id': divisions.country.theatre.id}) }}">{{ divisions.country.theatre.theatre }}</b></td>
+                    <td><b><a href= "{{ path('subcontinent_show',{'id': divisions.country.theatre.subcontinent.id}) }}">{{ divisions.country.theatre.subcontinent.subcontinent }}</b></td></b></td>
+                    <td><b><a href= "{{ path('continent_show',{'id': divisions.country.theatre.subcontinent.continent.id}) }}">{{ divisions.country.theatre.subcontinent.continent.continent }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+    <h6><a href="{{ path('division') }}">Show all divisions</a></h6>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="pr-3">Details: </i></h3>
+            <hr>
+        </div>
+        <h4> Subdivisions in {{ divisions.division }}</h4></br>
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Loc Type</th>
+            </thead>
+            <tbody>
+                {% for subdivision in divisions.subdivisions %}
+                    <tr>
+                        <td> {{ subdivision.id }} </td>
+                        <td> <a href= "{{ path('subdivision_show', {'id': subdivision.id}) }}">{{ subdivision.subdivision}}</td>
+                        <td> {{ subdivision.loctype.loctype}} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4> To be Added</h4></br>
+        <ul>
+            <li>Units at {{ divisions.division }}</li>
+            <li>Government of {{ divisions.division }}</il>
+            <li>People of {{ divisions.division }}</il>
+
+
+
+    </div>
+
+{% endblock %}

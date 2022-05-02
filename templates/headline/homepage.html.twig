@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid">
+    <h3>Please select the type of headline retrieval</h3>
+    
+    <div class="container-fluid background-color:cyan">
+        <div class="row">
+            <div class="col-xl">
+                <p class="bg-light text-black text-center border-info"><span class="border border-dark"> <a href="headline/date">Select by Random Date</a> </span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl">
+                <p class="bg-light text-black text-center"><span class="border border-info"><a href="headline/1">Select by ID</a></span></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl">
+                <p class="bg-light text-black text-center"><span class="border border-info"><a href="headline/subcampaign">Select by Selected Sub-Campaign</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl">
+                <p class="bg-light text-black text-center"><span class="border border-info"><a href="headline/sdate">Select by Selected Date</p>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-xl">
+                <p class="bg-light text-black text-center"><a href="headline/today">Events on this Day</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

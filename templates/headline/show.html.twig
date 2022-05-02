@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Event Headline for {{ headline.date|date('d/m/Y') }}</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><b>{{ headline.headline }}</b></td>
+                    <td><b><a href= "{{ path('subcampaign_show', {'id': headline.subcampaign.id}) }}">{{ headline.subcampaign.subcampaign }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3><i class="pr-3">Details: ( {{ headline.details|length }} entries)</i></h3>
+            <hr>
+
+            {% for detail in headline.details %}
+            <div class="row">
+                <div>
+                    <div class="pl-3 align-left">
+                        <p style= "text-align:left" margin-left: 5%> {{ detail.id }}:   {{ detail.detail }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

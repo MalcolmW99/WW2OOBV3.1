@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Unit Types {{ unittype.unittype}}</h1>
+            <table class="table">
+             <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Unit type</th>
+                    <th>Force Type</th>
+                    <th>Country</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                    <tr>
+                        <td> {{ unittype.id }} </td>
+                        <td> {{ unittype.unittype}}</td>
+                        <td> {{ unittype.forcetype.forcetype }} </td>
+                        <td> <a href= "{{ path('country_show', {'id': unittype.country.id}) }}">{{ unittype.country.country}} </td>
+                        <td> {{ unittype.comments}} </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Units of {{ unittype.unittype}}</h2>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>Unit</th>
+                <th>Unit Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unit in unittype.units %}
+                    <tr>
+                        <td> {{ unit.id }} </td>
+                        <td> <a href= "{{ path('unit_show', {'id': unit.id}) }}">{{ unit.unit}}</td>
+                        <td> {{ unit.unitno }} </td>
+                        <td> {{ unit.startdate|date('d/m/Y') }} </td>
+                        <td> {{ unit.enddate|date('d/m/Y') }} </td>
+                        <td> {{ unit.Description}} </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}

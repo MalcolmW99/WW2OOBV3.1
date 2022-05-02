@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid background-color:aqua text=white">
+        <h1>Welcome User.</h1>
+    {% if not app.user %}
+        Please Register or Login
+    {% endif %}
+            
+        <h3>Please select which service to use from the table below.</h3>
+    <p>To be added a description of what each represents.</p>
+
+    <table class="container-fluid background-color:aqua">
+        <tbody>
+            <tr>
+                <td>
+                    <p class="bg-success text-white text-center">COUNTRY</p>
+                </td>
+                <td>
+                    <p class = "bg-success text-white text-center"> Navy</p>
+                </td>
+                <td>
+                    <p class = "bg-success text-white text-center"> Army</p>
+                </td>
+                <td>
+                    <p class = "bg-success text-white text-center"> Air Force</p>
+                </td>
+                <td>
+                    <p class = "bg-success text-white text-center"> Government</p>
+                </td>
+                <td>
+                    <p class = "bg-success text-white text-center"> People</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="bg-success text-white text-center">United Kingdom and Commonwealth</p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"><a href= "#1">Royal Navy</p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"><a href= "#2"> British Army</p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"><a href= "{{ path('svice_change', {'id': 1}) }}">Royal Air Force</p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"><a href= "#4"> British Government</p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"> <a href= "#5">British People</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="bg-success text-white text-center">Germany </p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"> <a href= "#6">Kriegsmarine<p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"> <a href= "#7">Oberkommando des Heeres<p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"> <a href= "#8">Luftwaffe<p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"> <a href= "#9">German Government<p>
+                </td>
+                <td>
+                    <p class = "bg-light text-black text-center"> <a href= "#10">German People<p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p> More to be added later including USA, France and Japan</p>
+</div>
+{% endblock %}

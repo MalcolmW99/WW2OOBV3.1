@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Front: {{ fronts.front }}</h3>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Front</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Subcontinent</th>
+                <th>Description</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ fronts.id }}</b></td>
+                    <td><b>{{ fronts.front }}</b></td>
+                    <td><b>{{ fronts.StartDate|date('d/m/Y') }}</b></td>
+                    <td><b>{{ fronts.EndDate|date('d/m/Y') }}</b></td>
+                    <td><b><a href= "{{ path('subcontinent_show', {'id': fronts.Subcontinent.id}) }}">{{ fronts.Subcontinent.subcontinent }} </a></b></td>
+                    <td><b>{{ fronts.description }}</b></td>
+                <tr>
+            </tbody>
+        </table>
+
+        <h6><a href="{{ path('fronts') }}">Show all Fronts</a></h6>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3><i class="pr-3">Details: </i></h3>
+                <hr>
+                <h4> Campaigns in "{{ fronts.front }}" </h4></br>
+                    <table class="table">
+                        <thead>
+                            <th>ID</th>
+                            <th>Campaign</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Description</th>
+                        </thead>
+                        <tbody>
+                            {% for campaign in fronts.campaigns %}
+                               <tr>
+                                    <td> {{ campaign.id }} </td>
+                                    <td> <a href= "{{ path('campaign_show', {'id': campaign.id}) }}">{{ campaign.campaign}}</a></td>
+                                    <td><b>{{ campaign.StartDate|date('d/m/Y') }}</b></td>
+                                    <td><b>{{ campaign.EndDate|date('d/m/Y') }}</b></td>
+                                    <td> {{ campaign.description}} </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <h4> To be added</h4></br>
+        <ul>
+            <li>Units in this Campaign on Selected Date</li>
+        </ul>
+            
+    </div>
+{% endblock %}

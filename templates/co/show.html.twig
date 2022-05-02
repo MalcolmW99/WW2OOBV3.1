@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid class text-center">
+        <h3> Commanding Officer: {{ cos.FullName }}</h3>
+
+        <table class="table">
+            <thead>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Date of Death</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>{{ cos.id }}</b></td>
+                    <td><b>{{ cos.FullName }}</b></td>
+                    {% if not cos.DoB %}
+                        <td>  </td>
+                    {% else %}
+                        <td> {{ cos.DoB|date('d/m/Y') }} </td>
+                    {% endif %}
+                    {% if not cos.DoD %}
+                        <td>  </td>
+                    {% else %}
+                        <td> {{ cos.DoD|date('d/m/Y') }} </td>
+                    {% endif %}
+                <tr>
+            </tbody>
+        </table>
+
+        <h6><a href="{{ path('co') }}">Show all Commandng Officers</a></h6>
+
+        <h3> Units of which {{ cos.FullName }} was Commanding Officer in date order.</h3>
+        {% if unitstatuses|length == 0 %}
+            No Units Found
+        {% else %}
+            <table class="table">
+                <thead>
+                    <th>Unit</th>
+                    <th>Unit Level</th>
+                    <th>AT</th>
+                    <th>AT2</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Comment</th>
+                    <th>Subcampaign 1</th>
+                    <th>Subcampaign 2</th>
+                </thead>
+                <tbody bgcolor='lightblue'>
+                    {% for unitstatus in unitstatuses %}
+                        <tr>
+                            <td> <a href= "{{ path('unit_show',{'id': unitstatus.unit.id}) }}"> {{unitstatus.unit.unit }} </td>
+                            <td> {{unitstatus.unit.unittype.level }} </td>
+                            <td> {{ unitstatus.location.location }} </td>
+                            <td> {{ unitstatus.location.subdivisions.subdivision }} </td>
+                            <td> {{ unitstatus.status.status }} </td>
+                            <td> {{ unitstatus.StartDate|date('d/m/Y') }}</td>
+                            <td> {{ unitstatus.EndDate|date('d/m/Y') }}</td>
+                            <td> {{ unitstatus.comment }} </td>
+                            <td> <a href= "{{ path('subcampaign_show', {'id': unitstatus.Subcampaign.id}) }}">{{ unitstatus.SubCampaign.subcampaign }} </td>
+                            {% if not unitstatus.SubCampaign2 %}
+                                <td>  </td>
+                            {% else %}
+                                <td><a href= "{{ path('subcampaign_show', {'id': unitstatus.Subcampaign2.id}) }}"> {{ unitstatus.SubCampaign2.subcampaign }} </a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
