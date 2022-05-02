@@ -31,7 +31,7 @@ class Countries
     private $LocType;
 
     /**
-     * @ORM\OneToMany(targetEntity=Divisions::class, mappedBy="Country")
+     * @ORM\OneToMany(targetEntity=Divisions::class, mappedBy="country")
      */
     private $divisions;
 
@@ -47,22 +47,22 @@ class Countries
     private $theatre;
 
     /**
-     * @ORM\OneToMany(targetEntity=ForceType::class, mappedBy="Country")
+     * @ORM\OneToMany(targetEntity=ForceType::class, mappedBy="country")
      */
     private $forceTypes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Forces::class, mappedBy="Country")
+     * @ORM\OneToMany(targetEntity=Forces::class, mappedBy="country")
      */
     private $forces;
 
     /**
-     * @ORM\OneToMany(targetEntity=UnitType::class, mappedBy="Country")
+     * @ORM\OneToMany(targetEntity=UnitType::class, mappedBy="country")
      */
     private $unitTypes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Units::class, mappedBy="Country")
+     * @ORM\OneToMany(targetEntity=Units::class, mappedBy="country")
      */
     private $units;
 
@@ -72,7 +72,7 @@ class Countries
     private $COs;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="Country")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="country")
      */
     private $users;
 
