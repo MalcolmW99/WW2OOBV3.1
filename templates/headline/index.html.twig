@@ -25,7 +25,7 @@
                 {% for headline in headlines %}
                     <tr>
                         <td> <a href= "{{ path('headline_show', {'id': headline.id}) }}">{{ headline.id }} </a></td>
-                        <td> {{ headline.date|date('d/m/Y') }}</td>
+                        <td> <a href= "{{ path('app_dateupdate', {('id'): headline.id, ('entity'): 'headline', ('date'): 'test'}) }}">{{ headline.date|date('d/m/Y') }}</href></td>
                         <td> {{ headline.headline }}</td>
                         <td> <a href= "{{ path('subcampaign_show', {'id': headline.subcampaign.id}) }}">{{ headline.subcampaign.subcampaign}} </a></td>
                     </tr>

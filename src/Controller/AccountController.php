@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Headline;
 use App\Entity\UnitEqup;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -85,6 +86,19 @@ class AccountController extends BaseController
                 $selecteddate = $unitequp->getEndDate();
             }
         }
+        if ($entity == 'headline') {
+            
+            $repository = $this->getDoctrine()->getRepository(Headline::class);
+            
+            /** @var headline $headline */
+            $headline = $repository->find($id);
+            
+            if (!$headline) {
+                throw $this->createNotFoundException('Headline $id not found');
+            }
+            
+            $selecteddate = $headline->getDate();
+        }
 
         // Check if date is within bounds
         
@@ -120,8 +134,8 @@ class AccountController extends BaseController
         $sc_end = $user->getSCEndDate();
 
         $selecteddate = $user->getSelectedDate();
-
-        $selecteddate = $selecteddate + 1;
+        
+        $selecteddate->add(new DateInterval('P1D'));
 
         dd($selecteddate);
 
