@@ -6,24 +6,36 @@
 <div class="container">
      <div class="row">
         <div class="col-12">
-            <h2 class="my-4">Order of Battle stub</h2>
+            <h2 class="my-4">Order of Battle</h2>
             <div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
-                <div class="q-container-show p-4">
-                    <div class="row">
-                        <div class="col-2 text-center">
-                            <img src="{{ asset('images/under-construction.gif') }}" width="100" height="100">
-                        </div>
-                        <div class="col">
-                            <h1 class="q-title-show"></h1>
-                            <div class="q-display p-3">
-                                <i class="fa fa-quote-left mr-3"></i>
-                                <p class="d-inline">The Order of Battle will emerge fom this stub.........eventually</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    <h4> Order Of Battle Of: {{ units.unit }}</h4>
-                    <p class="d-inline">{{ oob }}
+                <h4> Of: <a href= "{{ path('unit_show',{'id': units.id}) }}">{{ units.unit }}</a> on {{ app.user.SelectedDate|date('d/m/Y') }} 
+
+                {% if higherunits|length == 0 %}
+                    No Units Found
+                {% else %}
+                    <table class="table">
+                        <thead>
+                            <th>Unit</th>
+                            <th>Unit Level</th>
+                            <th>Unit No.</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Comment</th>
+                        </thead>
+                        <tbody bgcolor='lightblue'>
+                            {% for higherunit in higherunits| sort((a, b) => a.unit.unitno <=> b.unit.unitno) %}
+                                <tr>
+                                    <td> <a href= "{{ path('oob',{'id': higherunit.unit.id}) }}"> {{higherunit.unit.unit }} </td>
+                                    <td> {{higherunit.unit.unittype.level }} </td>
+                                    <td> {{higherunit.unit.unitno }} </td>
+                                    <td> {{ higherunit.StartDate|date('d/m/Y') }}</td>
+                                    <td> {{ higherunit.EndDate|date('d/m/Y') }}</td>
+                                    <td> {{ higherunit.comment }} </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
             </div>
         </div>
     </div>

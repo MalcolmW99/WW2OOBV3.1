@@ -15,25 +15,14 @@ class UnitStatusController extends AbstractController
     /**
      * @Route("/unit/status/{id}", name="unitstatus_show")
      */
-    public function show()
+    public function show($id)
     {
-        $repository = $this->getDoctrine()->getRepository(Sessionvars::class);
-        $id = 1;
-        /** @var sessionvars $sessionvars */
-         $sessionvars = $repository->find($id);
-
-        if (!$sessionvars) {
-             throw $this->createNotFoundException('No sessionvars found');
-         }
-        $unit = $sessionvars->getunit();
-        $unitid = $unit->getID();
-        
         $repository = $this->getDoctrine()->getRepository(UnitStatus::class);
         
         /** @var unitstatus $unitstatus */
         
         
-        $unitstatus = $repository->findBy([$unitid]);
+        $unitstatus = $repository->find($id);
 
         if (!$unitstatus) {
             throw $this->createNotFoundException('Unit $id not found');

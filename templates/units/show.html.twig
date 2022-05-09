@@ -35,7 +35,9 @@
                 Not yet entered
             {% endif %}
         </h5>
-        <br><br><h6><a href="{{ path('units') }}">Show all Units</a></h6><br><br>
+        <br><h6><a href="{{ path('units') }}">Show all Units</a></h6><br>
+
+        <h6><a href="{{ path('oob', {'id': units.id}) }}">OOB</a></h6><br>
 
         <div>
 

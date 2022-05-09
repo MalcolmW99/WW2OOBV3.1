@@ -16,6 +16,18 @@ class OOBController extends AbstractController
      */
     public function index($id)
     {
+        /** @var user $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+             throw $this->createNotFoundException('No User found');
+         }
+         $SelectedDate = $user->getSelectedDate();
+ 
+        $repository = $this->getDoctrine()->getRepository(UnitStatus::class);
+        $HigherUnit = $repository-> findByHigherUnit($id, $SelectedDate);
+
+        
         $repository = $this->getDoctrine()->getRepository(Units::class);
 
         /** @var units $units */
@@ -35,12 +47,11 @@ class OOBController extends AbstractController
          }
          $SelectedDate = $user->getSelectedDate();
 
-       $oob = "Under Construction";
+         return $this->render('OOB/index.html.twig', [   
+            'units' => $units,
+            'unitstatuses' => $unitstatus,
+            'higherunits' => $HigherUnit
 
-        return $this->render('OOB/index.html.twig', [   
-        'units' => $units,
-        'unitstatuses' => $unitstatus,
-        'oob' => $oob
         ]);
             
     }
