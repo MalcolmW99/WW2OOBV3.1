@@ -38,7 +38,7 @@ class OOBController extends AbstractController
         }
         /** @var unitstatus $unitstatus */
         $unitstatus = $units ->getUnitStatuses();
-
+        
         /** @var user $user */
         $user = $this->getUser();
 

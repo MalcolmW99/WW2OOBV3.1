@@ -68,7 +68,7 @@ class UnitsController extends AbstractController
         /** @var unitstatus $HigherUnit  */
         $repository = $this->getDoctrine()->getRepository(UnitStatus::class);
         $HigherUnit = $repository-> findByHigherUnit($id, $SelectedDate);
-
+        
         $repository = $this->getDoctrine()->getRepository(UnitEqup::class);
         $UnitEqup = $repository-> findByUnit($id);
         

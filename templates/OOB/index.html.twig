@@ -18,6 +18,7 @@
                             <th>Unit</th>
                             <th>Unit Level</th>
                             <th>Unit No.</th>
+                            <th>AT</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Comment</th>
@@ -26,8 +27,9 @@
                             {% for higherunit in higherunits| sort((a, b) => a.unit.unitno <=> b.unit.unitno) %}
                                 <tr>
                                     <td> <a href= "{{ path('oob',{'id': higherunit.unit.id}) }}"> {{higherunit.unit.unit }} </td>
-                                    <td> {{higherunit.unit.unittype.level }} </td>
-                                    <td> {{higherunit.unit.unitno }} </td>
+                                    <td> {{ higherunit.unit.unittype.level }} </td>
+                                    <td> {{ higherunit.unit.unitno }} </td>
+                                    <td> {{ higherunit.location.location }} </td>
                                     <td> {{ higherunit.StartDate|date('d/m/Y') }}</td>
                                     <td> {{ higherunit.EndDate|date('d/m/Y') }}</td>
                                     <td> {{ higherunit.comment }} </td>
