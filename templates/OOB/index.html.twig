@@ -3,42 +3,38 @@
 {% block title %}Order of Battle Page{% endblock %}
 
 {% block body %}
-<div class="container">
-     <div class="row">
-        <div class="col-12">
-            <h2 class="my-4">Order of Battle</h2>
-            <div style="box-shadow: 2px 3px 9px 4px rgba(0,0,0,0.04);">
-                <h4> Of: <a href= "{{ path('unit_show',{'id': units.id}) }}">{{ units.unit }}</a> on {{ app.user.SelectedDate|date('d/m/Y') }} 
+    <div class="conntaier-fluid class text-center">
+        <h4 class="my-4">Order of Battle</h4>
 
-                {% if higherunits|length == 0 %}
-                    No Units Found
-                {% else %}
-                    <table class="table">
-                        <thead>
-                            <th>Unit</th>
-                            <th>Unit Level</th>
-                            <th>Unit No.</th>
-                            <th>AT</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Comment</th>
-                        </thead>
-                        <tbody bgcolor='lightblue'>
-                            {% for higherunit in higherunits| sort((a, b) => a.unit.unitno <=> b.unit.unitno) %}
-                                <tr>
-                                    <td> <a href= "{{ path('oob',{'id': higherunit.unit.id}) }}"> {{higherunit.unit.unit }} </td>
-                                    <td> {{ higherunit.unit.unittype.level }} </td>
-                                    <td> {{ higherunit.unit.unitno }} </td>
-                                    <td> {{ higherunit.location.location }} </td>
-                                    <td> {{ higherunit.StartDate|date('d/m/Y') }}</td>
-                                    <td> {{ higherunit.EndDate|date('d/m/Y') }}</td>
-                                    <td> {{ higherunit.comment }} </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-            </div>
-        </div>
+        <h5> Of: <a href= "{{ path('unit_show',{'id': units.id}) }}">{{ units.unit }}</a> on {{ app.user.SelectedDate|date('d/m/Y') }} <h5>
+
+        {% if higherunits|length == 0 %}
+            No Units Found
+        {% else %}
+            <table class="table">
+                <thead>
+                    <th>Unit</th>
+                    <th>Unit Level</th>
+                    <th>Unit No.</th>
+                    <th>AT</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Comment</th>
+                </thead>
+                <tbody>
+                    {% for higherunit in higherunits| sort((a, b) => a.unit.unitno <=> b.unit.unitno) %}
+                        <tr>
+                            <td> <a href= "{{ path('oob',{'id': higherunit.unit.id}) }}"> {{higherunit.unit.unit }} </td>
+                            <td> {{ higherunit.unit.unittype.level }} </td>
+                            <td> {{ higherunit.unit.unitno }} </td>
+                            <td> {{ higherunit.location.location }} </td>
+                            <td> {{ higherunit.StartDate|date('d/m/Y') }}</td>
+                            <td> {{ higherunit.EndDate|date('d/m/Y') }}</td>
+                            <td> {{ higherunit.comment }} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 {% endblock %}

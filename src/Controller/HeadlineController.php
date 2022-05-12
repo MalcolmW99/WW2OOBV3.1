@@ -85,7 +85,7 @@ class HeadlineController extends AbstractController
              throw $this->createNotFoundException('No User found');
         }
         $scamp = $user->getSubcampaign();
-
+        
         $repository = $this->getDoctrine()->getRepository(Headline::class);
         /** @var Headline $headline */
         $headlines = $repository->findBy(['subcampaign' => $scamp], ['date' => 'ASC']);
