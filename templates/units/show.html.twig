@@ -116,7 +116,7 @@
                     <th>Subcampaign 2</th>
                 </thead>
                 <tbody bgcolor='lightblue'>
-                    {% for higherunit in higherunits %}
+                    {% for higherunit in higherunits| sort((a, b) => a.unit.unitno <=> b.unit.unitno) %}
                         <tr>
                             <td> <a href= "{{ path('unit_show',{'id': higherunit.unit.id}) }}"> {{higherunit.unit.unit }} </td>
                             <td> {{higherunit.unit.unittype.level }} </td>
