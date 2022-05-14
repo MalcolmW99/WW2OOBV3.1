@@ -6,6 +6,7 @@ use App\Entity\UnitEqup;
 use App\Entity\User;
 use App\Entity\Units;
 use App\Entity\UnitStatus;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,7 +15,7 @@ class OOBController extends AbstractController
     /**
      * @Route("/oob/{id}", name="oob")
      */
-    public function index($id)
+    public function index(ManagerRegistry $doctrine, $id)
     {
         /** @var user $user */
         $user = $this->getUser();
@@ -24,11 +25,11 @@ class OOBController extends AbstractController
          }
          $SelectedDate = $user->getSelectedDate();
  
-        $repository = $this->getDoctrine()->getRepository(UnitStatus::class);
+        $repository = $doctrine->getRepository(UnitStatus::class);
         $HigherUnit = $repository-> findByHigherUnit($id, $SelectedDate);
 
         
-        $repository = $this->getDoctrine()->getRepository(Units::class);
+        $repository = $doctrine->getRepository(Units::class);
 
         /** @var units $units */
         $units = $repository->find($id);

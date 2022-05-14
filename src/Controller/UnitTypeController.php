@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\UnitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,12 +12,10 @@ class UnitTypeController extends AbstractController
     /**
      * @Route("/unittype", name="unit_type")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(UnitType::class);
-        
         /** @var unittype $unittype */
-         $unittype = $repository->findBy([],['Country' => 'ASC'] );
+         $unittype = $doctrine->getRepository(UnitType::class)->findBy([],['ForceType' => 'ASC'] );
 
          if (!$unittype) {
              throw $this->createNotFoundException('No Unit found');
@@ -31,12 +30,10 @@ class UnitTypeController extends AbstractController
    /**
      * @Route("/unittype/{id}", name="unittype_show")
      */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(UnitType::class);
-        
         /** @var unittpe $unittype */
-        $unittype = $repository->find($id);
+        $unittype = $doctrine->getRepository(UnitType::class)->find($id);
 
         if (!$unittype) {
             throw $this->createNotFoundException('Unit $id not found');

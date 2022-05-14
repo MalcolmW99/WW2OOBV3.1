@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\SubCampaign;
 use App\Entity\Sessionvars;
 
@@ -12,29 +13,26 @@ class SubcampaignController extends AbstractController
     /**
      * @Route("/subcampaign", name="subcampaign")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(SubCampaign::class);
-        
         /** @var subcampaign $subcampaigns */
-         $subcampaigns = $repository->findAll();
-         if (!$subcampaigns) {
-             throw $this->createNotFoundException('No Subcampaign found');
-         }
-        return $this->render('subcampaign/index.html.twig', [
-             'subcampaigns' => $subcampaigns,
+            $subcampaigns = $doctrine->getRepository(SubCampaign::class)->findAll();
+
+            if (!$subcampaigns) {
+                throw $this->createNotFoundException('No Subcampaign found');
+            }
+            return $this->render('subcampaign/index.html.twig', [
+                'subcampaigns' => $subcampaigns,
         ]);
     }
 
     /**
      * @Route("/subcampaign/{id}", name="subcampaign_show")
      */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Subcampaign::class);
-        
         /** @var subcampaign $subcampaigns */
-        $subcampaigns = $repository->find($id);
+        $subcampaigns = $doctrine->getRepository(SubCampaign::class)->find($id);
 
         if (!$subcampaigns) {
             throw $this->createNotFoundException('Subcampaign $id not found');

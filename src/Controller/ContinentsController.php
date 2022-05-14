@@ -6,18 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Continents;
 use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
+
 
 class ContinentsController extends AbstractController
 {
     /**
      * @Route("/continents", name="continents")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(Continents::class);
-            
         /** @var continents $continents */
-        $continents = $repository->findAll();
+        $continents = $doctrine->getRepository(Continents::class)->findAll();
 
         if (!$continents) {
             throw $this->createNotFoundException('No Continent found');
@@ -31,12 +31,10 @@ class ContinentsController extends AbstractController
     /**
     * @Route("/continents/{id}", name="continent_show")
     */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Continents::class);
-        
         /** @var continents $continents */
-        $continents = $repository->find($id);
+        $continents = $doctrine->getRepository(Continents::class)->find($id);
 
         if (!$continents) {
             throw $this->createNotFoundException('Continent $id not found');

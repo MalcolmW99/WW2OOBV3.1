@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\UnitEqup;
 use App\Entity\User;
 use App\Entity\Units;
@@ -14,7 +15,7 @@ class UnitsController extends AbstractController
     /**
      * @Route("/units", name="units")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
          /** @var \App\Entity\User $user */
          $user = $this->getUser();
@@ -22,17 +23,12 @@ class UnitsController extends AbstractController
              throw $this->createNotFoundException('No User found');
         }
         
-        $repository = $this->getDoctrine()->getRepository(Units::class);
-        
         /** @var units $units */
-         $units = $repository->findAll();
+         $units = $doctrine->getRepository(Units::class)->findAll();
 
          if (!$units) {
              throw $this->createNotFoundException('No Unit found');
         }
-        
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        
        
         return $this->render('units/index.html.twig', [
             'units' => $units,
@@ -44,12 +40,10 @@ class UnitsController extends AbstractController
    /**
      * @Route("/units/{id}", name="unit_show")
      */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Units::class);
-        
         /** @var units $units */
-        $units = $repository->find($id);
+        $units = $doctrine->getRepository(Units::class)->find($id);
 
         if (!$units) {
             throw $this->createNotFoundException('Unit $id not found');
@@ -66,11 +60,10 @@ class UnitsController extends AbstractController
          $SelectedDate = $user->getSelectedDate();
 
         /** @var unitstatus $HigherUnit  */
-        $repository = $this->getDoctrine()->getRepository(UnitStatus::class);
-        $HigherUnit = $repository-> findByHigherUnit($id, $SelectedDate);
-        
-        $repository = $this->getDoctrine()->getRepository(UnitEqup::class);
-        $UnitEqup = $repository-> findByUnit($id);
+        $HigherUnit = $doctrine->getRepository(UnitStatus::class)-> findByHigherUnit($id, $SelectedDate);
+
+        /** @var UnitEqup $UnitEqup  */
+        $UnitEqup = $doctrine->getRepository(UnitEqup::class)-> findByUnit($id);
         
         return $this->render('units/show.html.twig', [
             'units' => $units,

@@ -8,10 +8,10 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
+<div class="container-fluid">
     <h1>Manage Headlines ({{ headlines.getTotalItemCount }})</</h1>
 
-    <div class="container-fluid class text-center">
+    <div class="container-fluid">
         <h3> News Headlines for {{ headlines[0].date|date('d/m/Y') }} and on</h3>
 
         <table class="table">
@@ -27,7 +27,7 @@
                 {% for headline in headlines %}
                     <tr>
                         <td> <a href= "{{ path('headline_admin_show', {'id': headline.id}) }}">{{ headline.id }} </a></td>
-                        <td> {{ path('app_dateupdate', {('id'): headline.id, ('entity'): 'headline', ('date'): 'test'}) }}">{{ headline.date|date('d/m/Y') }}</td>
+                        <td> {{ headline.date|date('d/m/Y') }}</td>
                         <td> {{ headline.headline }}</td>
                         <td> <a href= "{{ path('subcampaign_show', {'id': headline.subcampaign.id}) }}">{{ headline.subcampaign.subcampaign}} </a></td>
                     </tr>

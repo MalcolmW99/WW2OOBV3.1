@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Campaign;
+
 use App\Entity\User;
 
 class CampaignController extends AbstractController
@@ -12,12 +14,10 @@ class CampaignController extends AbstractController
     /**
      * @Route("/campaign", name="campaign")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(Campaign::class);
-        
         /** @var campaign $campaigns */
-         $campaigns = $repository->findAll();
+         $campaigns = $doctrine->getRepository(Campaign::class)->findAll();
 
          if (!$campaigns) {
              throw $this->createNotFoundException('No Campaign found');
@@ -31,16 +31,14 @@ class CampaignController extends AbstractController
     /**
     * @Route("/campaign/{id}", name="campaign_show")
     */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Campaign::class);
-        
         /** @var campaign $campaigns */
-        $campaigns = $repository->find($id);
+        $campaigns = $doctrine->getRepository(Campaign::class)->find($id);
 
-        if (!$campaigns) {
+        if (!$campaigns) 
             throw $this->createNotFoundException('Campaign $id not found');
-            }
+            
          return $this->render('campaign/show.html.twig', [
              'campaigns' => $campaigns,
              ]);

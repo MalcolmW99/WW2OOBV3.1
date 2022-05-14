@@ -5,18 +5,17 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Countries;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CountriesController extends AbstractController
 {
     /**
      * @Route("/countries", name="countries")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(Countries::class);
-        
         /** @var countries $countries */
-        $countries = $repository->findAll();
+        $countries = $doctrine->getRepository(Countries::class)->findAll();
 
         if (!$countries) {
             throw $this->createNotFoundException('No Country found');
@@ -31,12 +30,10 @@ class CountriesController extends AbstractController
     /**
      * @Route("/countries/{id}", name="country_show")
      */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Countries::class);
-        
         /** @var countries $countries */
-        $countries = $repository->find($id);
+        $countries = $doctrine->getRepository(Countries::class)->find($id);
 
         if (!$countries) {
             throw $this->createNotFoundException('Country $id not found');

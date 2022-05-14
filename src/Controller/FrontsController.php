@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Fronts;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,12 +12,10 @@ class FrontsController extends AbstractController
     /**
      * @Route("/fronts", name="fronts")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(Fronts::class);
-        
         /** @var front $fronts */
-         $fronts = $repository->findBy([], ['SortOrder' => 'ASC']);
+         $fronts = $doctrine->getRepository(Fronts::class)->findBy([], ['SortOrder' => 'ASC']);
 
          if (!$fronts) {
              throw $this->createNotFoundException('No Front found');
@@ -30,12 +29,10 @@ class FrontsController extends AbstractController
     /**
     * @Route("/fronts/{id}", name="front_show")
     */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Fronts::class);
-        
         /** @var fronts $fronts */
-        $fronts = $repository->find($id);
+        $fronts = $doctrine->getRepository(Fronts::class)->find($id);
 
         if (!$fronts) {
             throw $this->createNotFoundException('Front $id not found');

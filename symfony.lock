@@ -41,6 +41,9 @@
     "babdev/pagerfanta-bundle": {
         "version": "v3.6.1"
     },
+    "beberlei/doctrineextensions": {
+        "version": "v1.3.0"
+    },
     "daverandom/libdns": {
         "version": "v2.0.2"
     },
@@ -130,6 +133,12 @@
     },
     "kelunik/certificate": {
         "version": "v1.1.2"
+    },
+    "knplabs/knp-components": {
+        "version": "v3.5.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.8.0"
     },
     "laminas/laminas-code": {
         "version": "4.5.1"
@@ -386,6 +395,21 @@
     },
     "symfony/password-hasher": {
         "version": "v5.3.14"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "97cb3dc7b0f39c7cfc4b7553504c9d7b7795de96"
+        },
+        "files": [
+            "./.env.test",
+            "./bin/phpunit",
+            "./phpunit.xml.dist",
+            "./tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.25.0"

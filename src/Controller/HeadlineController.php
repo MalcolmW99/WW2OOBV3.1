@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Headline;
 use App\Entity\User;
 use DateTime;
@@ -11,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\HeadlineRepository;
 use App\Repository\DetailRepository;
 use App\Entity\Sessionvars;
+use Symfony\Component\HttpFoundation\Response;
 
 class HeadlineController extends AbstractController
 {
@@ -26,11 +28,11 @@ class HeadlineController extends AbstractController
     /**
      * @Route("/headline/date", name="headline_date")
      */
-    public function indexbydate(EntityManagerInterface $em)
+    public function indexbydate(ManagerRegistry $doctrine):Response
     {
         $offset = rand(0,10137);
 /* The following ONLY works because the RAF entries occupy all dates in order at the beginning of the list*/
-        $repository = $this->getDoctrine()->getRepository(Headline::class);
+        $repository = $doctrine->getRepository(Headline::class);
         /** @var Headline $dateheadline */
         $dateheadline = $repository->find($offset);
         $date = $dateheadline->getDate();
@@ -49,9 +51,9 @@ class HeadlineController extends AbstractController
     /**
      * @Route("/headline/sdate", name="headline_sdate")
      */
-    public function indexbyselecteddate(EntityManagerInterface $em)
+    public function indexbyselecteddate(ManagerRegistry $doctrine):Response
     {
-        $repository = $this->getDoctrine()->getRepository(User::class);
+        $repository = $doctrine->getRepository(User::class);
         
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
@@ -61,7 +63,7 @@ class HeadlineController extends AbstractController
 
         $date = $user->getSelectedDate();
 
-        $repository = $this->getDoctrine()->getRepository(Headline::class);
+        $repository = $doctrine->getRepository(Headline::class);
         /** @var Headline $headline */
         $headlines = $repository->findBy(['date' => $date]);
         if (!$headlines) {
@@ -109,6 +111,7 @@ class HeadlineController extends AbstractController
 
         /** @var Headline $headlines */
         $headlines = $repository->findOnThisDay($today);
+        
          if (!$headlines) {
              throw $this->createNotFoundException('No headline found for ID');
          }
@@ -122,12 +125,11 @@ class HeadlineController extends AbstractController
     /**
      * @Route("/headline/{startid}", name="headline_byid")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine):Response
     {   
-        $repository = $this->getDoctrine()->getRepository(Headline::class);
         /** @var Headline $headlines */
-         
-        $headlines = $repository->findAll();
+      
+        $headlines = $doctrine->getRepository(Headline::class)->findAll();
         if (!$headlines) {
              throw $this->createNotFoundException('No headline found for ID');
         }

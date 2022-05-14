@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Subdivisions;
 use App\Entity\Sessionvars;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,12 +13,10 @@ class SubdivisionController extends AbstractController
     /**
      * @Route("/subdivision", name="subdivision")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
-        $repository = $this->getDoctrine()->getRepository(Subdivisions::class);
-        
         /** @var subdivisions $subdivisions */
-        $subdivisions = $repository->findAll();
+        $subdivisions = $doctrine->getRepository(Subdivisions::class)->findAll();
 
         if (!$subdivisions) {
             throw $this->createNotFoundException('No subdivisions found');
@@ -30,12 +29,10 @@ class SubdivisionController extends AbstractController
     /**
      * @Route("/subdivision/{id}", name="subdivision_show")
      */
-    public function show($id)
+    public function show(ManagerRegistry $doctrine, $id)
     {
-        $repository = $this->getDoctrine()->getRepository(Subdivisions::class);
-        
         /** @var Subdivisions $subdivisions */
-        $subdivisions = $repository->find($id);
+        $subdivisions = $doctrine->getRepository(Subdivisions::class)->find($id);
         if (!$subdivisions) {
             throw $this->createNotFoundException('Location $id not found');
         }
