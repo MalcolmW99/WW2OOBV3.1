@@ -23,19 +23,18 @@ class UnitsRepository extends ServiceEntityRepository
     //  * @return Units[] Returns an array of Units objects
     //  */
 
-    /*
-    public function findByExampleField($value)
+
+    public function findByForceField($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.Forces = :val')
             ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('u.UnitNo', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
     
     /*
     public function findOneBySomeField($value): ?Units

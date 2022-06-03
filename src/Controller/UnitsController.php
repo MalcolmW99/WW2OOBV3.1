@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Forces;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\UnitEqup;
 use App\Entity\User;
 use App\Entity\Units;
+
 use App\Entity\UnitStatus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,10 +24,12 @@ class UnitsController extends AbstractController
          if (!$user) {
              throw $this->createNotFoundException('No User found');
         }
-        
-        /** @var units $units */
-         $units = $doctrine->getRepository(Units::class)->findAll();
 
+        $forces = $user->getForces();
+
+        /** @var units $units */
+        $units = $doctrine->getRepository(Units::class)->findByForceField($forces);
+        
          if (!$units) {
              throw $this->createNotFoundException('No Unit found');
         }

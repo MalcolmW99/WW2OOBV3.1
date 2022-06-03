@@ -81,6 +81,7 @@
             </div>
         </nav>
         {% block globals %}
+        xxxx
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <nav class="container-fluid p-3 bg-light fixed-bottom text-black">
                     <p><b>User Variables</b></p>
@@ -91,6 +92,7 @@
                                 <td>Unit: <a href= "{{ path('unit_show', {'id': app.user.unit.id}) }}">{{ app.user.unit.unit }}</a></td>
                                 <td>Country: <a href= "{{ path('country_show', {'id': app.user.country.id}) }}">{{ app.user.country.country }}</a></td>
                                 <td>Subcampaign: <a href= "{{ path('subcampaign_show', {'id': app.user.subcampaign.id}) }}">{{ app.user.subcampaign.subcampaign }} </td>
+                                <td>Forces: {{ app.user.forces.ForceName }} </td>
                                 <td>Selected Date: {{ app.user.selecteddate|date('d/m/Y') }} </td>
                             {% endif %}
                         </tr>

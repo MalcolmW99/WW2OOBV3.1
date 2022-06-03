@@ -52,6 +52,11 @@ class Service
      */
     private $scenddate;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Forces::class, cascade={"persist", "remove"})
+     */
+    private $forces;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +142,18 @@ class Service
     public function setScenddate(?\DateTimeInterface $scenddate): self
     {
         $this->scenddate = $scenddate;
+
+        return $this;
+    }
+
+    public function getForces(): ?Forces
+    {
+        return $this->forces;
+    }
+
+    public function setForces(?Forces $forces): self
+    {
+        $this->forces = $forces;
 
         return $this;
     }

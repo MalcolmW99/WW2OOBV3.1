@@ -84,6 +84,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $SCEndDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Forces::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $forces;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -284,4 +290,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getForces(): ?forces
+    {
+        return $this->forces;
+    }
+
+    public function setForces(?forces $Forces): self
+    {
+        $this->forces = $Forces;
+
+        return $this;
+    }
+
 }

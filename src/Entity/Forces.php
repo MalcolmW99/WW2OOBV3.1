@@ -47,13 +47,19 @@ class Forces
     private $SortOrder;
 
     /**
-     * @ORM\OneToMany(targetEntity=Units::class, mappedBy="Forces")
+     * @ORM\OneToMany(targetEntity=Units::class, mappedBy="forces")
      */
     private $units;
 
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="forces")
+     */
+    private $users;
+ 
     public function __construct()
     {
         $this->units = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +152,36 @@ class Forces
             // set the owning side to null (unless already changed)
             if ($unit->getForces() === $this) {
                 $unit->setForces(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setForces($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getForces() === $this) {
+                $user->setForces(null);
             }
         }
 

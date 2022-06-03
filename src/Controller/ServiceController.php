@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Countries;
+use App\Entity\Forces;
 use App\Entity\ForceType;
 use App\Entity\Service;
 use App\Entity\SubCampaign;
@@ -37,6 +38,7 @@ class ServiceController extends AbstractController
         $unit = $service->getUnit();
         $country = $service->getCountry();
         $subcampaign = $service->getSubcampaign();
+        $force = $service->getForces();
         
 
        $repository = $this->getDoctrine()->getRepository(SubCampaign::class);
@@ -54,12 +56,14 @@ class ServiceController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Countries::class);
         $countries = $repository->find($country);
 
-        
+        $repository = $this->getDoctrine()->getRepository(Forces::class);
+        $forces = $repository->find($force);
         
         $userdate = $user->setSelectedDate($selecteddate);
         $userunit = $user->setUnit($units);
         $usercountry = $user->setCountry($countries);
         $usersubcamp = $user->setSubcampaign($subcamp);
+        $userforces = $user->setForces($forces);
         $userscsd = $user->setSCStartDate($scsd);
         $usersced = $user->setSCEndDate($sced);
         

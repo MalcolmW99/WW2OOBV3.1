@@ -35,7 +35,7 @@
                 Not yet entered
             {% endif %}
         </h5>
-        <br><h6><a href="{{ path('units') }}">Show all Units</a></h6><br>
+        <br><h6><a href="{{ path('units') }}">Show all {{ units.forces.forcename }} Units</a></h6><br>
 
         <h6><a href="{{ path('oob', {'id': units.id}) }}">OOB</a></h6><br>
 
@@ -167,8 +167,9 @@
 
         <h4> To be Added</h4></br>
         <ul>
-            <li>Events on Selected Date TBA</li>
-            <li>Headlines on Selected Date TBA</li>
+            <li>Events on Selected Date for unit TBA</li>
+            <li>Headlines on Selected Date for unit TBA</li>
+            <li>Breadcrumbs TBA</li>
             <li>More to be added</li>
     </div>
 
